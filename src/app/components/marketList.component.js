@@ -21,6 +21,7 @@ const MarketList = () => {
     try {
       const response = await axios.get(CryptoApi, {
         params: { vs_currency: "usd", order: "market_cap_desc" },
+        mode: "cors",
       });
       console.log("Market Data:", response.data); // Debugging
       setMarkets(response.data);

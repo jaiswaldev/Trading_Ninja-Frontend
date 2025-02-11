@@ -57,6 +57,7 @@ const StockChart = () => {
     axios
       .get(CryptoApi, {
         params: { vs_currency: "usd", order: "market_cap_desc" },
+        mode: "cors",
       })
       .then((response) => setMarkets(response.data))
       .catch((error) => console.error("Error fetching market data:", error));

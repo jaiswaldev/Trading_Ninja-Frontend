@@ -9,20 +9,31 @@ const MarketList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState("Cryptos");
 
+ const CryptoApi = process.env.NEXT_PUBLIC_CRYPTO_API_KEY;
+
   useEffect(() => {
-    const fetchData = () => {
-      axios.get("https://api.coingecko.com/api/v3/coins/markets", {
+  if (!CryptoApi) {
+    console.error("Crypto API URL is missing!");
+    return;
+  }
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(CryptoApi, {
         params: { vs_currency: "usd", order: "market_cap_desc" },
-      })
-      .then((response) => setMarkets(response.data))
-      .catch((error) => console.error("Error fetching market data:", error));
-    };
-  
-    fetchData();
-    const interval = setInterval(fetchData, 10000); // Fetch every 10s
-  
-    return () => clearInterval(interval);
-  }, []);
+      });
+      console.log("Market Data:", response.data); // Debugging
+      setMarkets(response.data);
+    } catch (error) {
+      console.error("Error fetching market data:", error);
+    }
+  };
+
+  fetchData();
+  const interval = setInterval(fetchData, 10000);
+  return () => clearInterval(interval);
+}, []);
+
   
 
   const filteredMarkets = markets.filter((coin) =>

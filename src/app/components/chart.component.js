@@ -52,10 +52,10 @@ const StockChart = () => {
   
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  
+  const CryptoApi = process.env.NEXT_PUBLIC_CRYPTO_API_KEY;
   useEffect(() => {
     axios
-      .get("https://api.coingecko.com/api/v3/coins/markets", {
+      .get(CryptoApi, {
         params: { vs_currency: "usd", order: "market_cap_desc" },
       })
       .then((response) => setMarkets(response.data))

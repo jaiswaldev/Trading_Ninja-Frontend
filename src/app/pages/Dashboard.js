@@ -1,6 +1,10 @@
+"use client";
+import dynamic from "next/dynamic";
 import Navbar from "../components/navbar.component";
-import StockChart from "../components/chart.component";
-import MarketList from "../components/marketList.component";
+
+const StockChart = dynamic(() => import("../components/chart.component"), { ssr: false });
+const MarketList = dynamic(() => import("../components/marketList.component"), { ssr: false });
+
 import OrdersTable from "../components/orderTable.component";
 import TradePanel from "../components/tradePanel.component";
 

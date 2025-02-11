@@ -87,12 +87,13 @@ const StockChart = () => {
 
  
   useEffect(() => {
-    fetchData(); 
-    intervalRef.current = setInterval(fetchData, 5000); 
-
-    return () => clearInterval(intervalRef.current); 
-  }, [selectedCrypto]); 
-
+    if (typeof window !== "undefined") {  
+      fetchData(); 
+      intervalRef.current = setInterval(fetchData, 5000);
+    }
+  
+    return () => clearInterval(intervalRef.current);
+  }, [selectedCrypto]);
   
   const options = {
     responsive: true,
